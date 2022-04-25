@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import BaseLayout from '~/src/component/atoms/layout/BaseLayout';
+import BaseLayout from '~/component/atoms/layout/BaseLayout';
 
 function Router(): JSX.Element {
   return (

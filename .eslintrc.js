@@ -1,11 +1,10 @@
 module.exports = {
   env: {
     browser: true,
-    es2021: true,
+    node: true,
   },
   extends: [
     'plugin:react/recommended',
-    'airbnb',
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:import/typescript',
@@ -78,6 +77,5 @@ module.exports = {
         endOfLine: 'auto',
       },
     ],
-    'import/extensions': ['off'],
   },
 };
