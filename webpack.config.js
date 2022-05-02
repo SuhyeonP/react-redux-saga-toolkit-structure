@@ -7,8 +7,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const StylelintPlugin = require('stylelint-webpack-plugin');
 const DotEnv = require('dotenv-webpack');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const ReactRefreshTypeScript = require('react-refresh-typescript');
 
-const PORT = process.env.PORT || 8080;
+const isDevelopment = process.env.NODE_ENV !== 'production';
+const PORT = process.env.PORT || 8090;
 
 module.exports = (env, argv) => ({
   mode: argv.mode,
@@ -34,6 +37,9 @@ module.exports = (env, argv) => ({
         loader: 'ts-loader',
         options: {
           transpileOnly: true,
+          getCustomTransformers: () => ({
+            before: [isDevelopment && ReactRefreshTypeScript()].filter(Boolean),
+          }),
         },
       },
       // tsconfig.json - 'jsx' 를 'preserve' 로 사용해야한다면 위 ts-loader 대신 아래 설정 사용할 것
@@ -85,7 +91,8 @@ module.exports = (env, argv) => ({
       emitError: true,
     }),
     new DotEnv(),
-  ],
+    isDevelopment && new ReactRefreshWebpackPlugin(),
+  ].filter(Boolean),
   devServer: {
     // contentBase: path.resolve(__dirname, 'public'),
     host: '0.0.0.0',
